@@ -9,32 +9,14 @@ An interactive order book visualization tool built with **Angular 19**, **D3.js*
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/your-username/order-book-visualizer.git
-cd order-book-visualizer
+git clone https://github.com/jaman7/order-book-visualizer.git .
 npm install
 npm start
 ```
 
 The app will be available at: [http://localhost:4200](http://localhost:4200)
 
----
-
-## 📁 Project Structure
-
-```
-src/
-├── app/
-│   ├── components/order-book/
-│   │   ├── order-book-chart/         # D3 chart with bid/ask bars and tooltips
-│   │   ├── order-book-page/          # Main view with slider, replay, metrics
-│   │   ├── order-book.service.ts     # Service to load and parse JSON data
-│   │   └── order-book.utils.ts       # Snapshot transformation utilities
-│   ├── core/                         # Core modules: i18n, HTTP, NgRx setup
-│   └── shared/components/button/     # Reusable button component with icons
-├── assets/
-│   ├── i18Local/                     # Translation files
-│   └── scss/                         # Global SCSS: variables, reset, layout
-```
+````
 
 ---
 
@@ -48,7 +30,6 @@ This project uses the following core libraries:
 - **@ngrx/store** – Application-wide state management
 - **@ngx-translate/core** – Translation and i18n handling
 - **ng-zorro-antd** – UI components (icons, tooltips)
-- **Jest + jest-preset-angular** – Testing framework
 
 ---
 
@@ -57,19 +38,8 @@ This project uses the following core libraries:
 - 📉 **Order Book Chart** – Visualizes 10 levels of bid and ask prices
 - ⏱ **Animated Replay** – Automatically replays snapshots with a 30s interval
 - 📊 **Metrics** – Displays spread and volume totals for both sides of the book
-- 🧪 **Unit Tests** – Configured with Jest
 - 🌍 **Internationalization** – Language support using `ngx-translate`
 - 💎 **Modern UI** – Clean, responsive, and styled with SCSS variables
-
----
-
-## 🧪 Running Tests
-
-```bash
-npm test
-```
-
-Runs unit tests using Jest.
 
 ---
 
@@ -107,25 +77,9 @@ The visualizer expects JSON lines like this:
   "Ask1": 100.7,
   "Ask1Size": 120
 }
-```
+````
 
 Each line is parsed into a snapshot object and rendered on the chart.
-
----
-
-## 📌 TODO
-
-- [ ] Export to PNG or CSV
-- [ ] Live WebSocket data stream
-- [ ] Enhanced mobile layout
-- [ ] Advanced metrics (e.g. VWAP)
-
----
-
-## 👨‍💻 Author
-
-Made with ❤️ by **Your Name**  
-Feel free to contribute, open issues, or fork this project!
 
 ---
 
