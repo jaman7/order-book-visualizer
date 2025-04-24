@@ -1,0 +1,10 @@
+{
+  "/api/bigxyt": {
+    "target": "https://big-xyt.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/bigxyt": ""
+    }
+  }
+}

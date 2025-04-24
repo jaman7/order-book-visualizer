@@ -1,0 +1,352 @@
+button.component.html
+<button
+  [disabled]="disabled"
+  [type]="type"
+  (click)="onClickButton($event)"
+  class="button-component"
+  [ngClass]="combinedClasses"
+  nz-tooltip
+  nzTooltipPlacement="top"
+  nzTooltipOverlayClassName="tooltip-btn-top"
+  [nzTooltipTitle]="tooltipTitle | translate"
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-disabled]="disabled"
+>
+  {{ name ? (name | translate) : '' }}
+  <i *ngIf="icon" nz-icon [nzType]="icon"></i>
+  <ng-content></ng-content>
+</button>
+
+button.component.scss
+$button-round-size-48: 48px;
+$button-round-size-24: 24px;
+$button-round-font-size-24: 24px;
+$button-round-font-size-12: 12px;
+
+:host {
+  &::ng-deep {
+    &.button-component {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      font-weight: bold;
+      transition:
+        background-color 0.3s ease-in-out,
+        color 0.3s ease-in-out;
+      color: var(--color-orange);
+      font-size: 14px;
+      font-family: var(--font-roboto);
+
+      &:not(:disabled) {
+        &:hover {
+          outline: none;
+          box-shadow: none;
+        }
+
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+
+      &.default-button {
+        padding: 8px 97px;
+        border-radius: 14px;
+
+        &:hover {
+          outline: none;
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &-small {
+          padding: 5px 3rem !important;
+        }
+      }
+
+      &.round {
+        background-color: transparent;
+        border-radius: 50%;
+        min-width: $button-round-size-24;
+        min-height: $button-round-size-24;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 0 6px 0 var(--shadow-color) !important;
+
+        i {
+          font-size: $button-round-font-size-12;
+        }
+
+        &.s32 {
+          min-width: $button-round-size-48 - 16;
+          min-height: $button-round-size-48 - 16;
+
+          i {
+            font-size: $button-round-font-size-24 - 4;
+          }
+        }
+
+        &:hover,
+        &:focus {
+          & i svg * {
+            fill: currentcolor;
+            stroke: currentcolor;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes button-blinke-animate {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.2;
+  }
+}
+
+button.component.ts
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-button',
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.scss',
+})
+export class ButtonComponent {
+  @Input() id: string | number;
+
+  @Input() name = '';
+
+  @Input() icon = '';
+
+  @Input() disabled = false;
+
+  @Input() type = '';
+
+  @Input() isRound = false;
+
+  @Input() customClass: string | string[] = '';
+
+  @Input() tooltipTitle: string = '';
+
+  @Output() btnClick: EventEmitter<MouseEvent> = new EventEmitter();
+
+  @Output() btnClickId: EventEmitter<string | number> = new EventEmitter();
+
+  onClickButton(event: MouseEvent, id?: string): void {
+    this.btnClick.emit(event);
+    this.btnClickId.emit(id ?? this.id ?? null);
+  }
+
+  get combinedClasses(): string {
+    return ['default-button', ...this.customClass, this.isRound ? 'round' : ''].join(' ');
+  }
+
+  get ariaLabel(): string {
+    return this.name || 'button';
+  }
+}
+
+button.model.ts
+export interface IButton {
+  onAction?: () => void;
+  id?: string;
+  name?: string;
+  className?: string;
+  customClass?: string;
+  tooltipTitle?: string;
+  tooltipClassName?: string;
+  isRound?: boolean;
+  icon?: string;
+  ariaLabel?: string;
+  disabled?: boolean;
+}
+
+button.module.ts
+import { ButtonComponent } from './button.component';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ZorroAntdModule } from '@app/shared/ng-zorro-antd.module';
+import { TranslateModule } from '@ngx-translate/core';
+
+@NgModule({
+  declarations: [ButtonComponent],
+  imports: [CommonModule, TranslateModule, ZorroAntdModule],
+  exports: [ButtonComponent],
+})
+export class ButtonModule {}
+
+button.stories.ts
+import { ButtonComponent } from './button.component';
+import {
+  ButtonsControl,
+  MapButtonsIcons,
+  MapButtonsTooltip,
+} from '@app/components/commons/map/components/sidebar-controls/sidebar-controls.enums';
+import { action } from '@storybook/addon-actions';
+import { StoryObj, Meta } from '@storybook/angular';
+
+export default {
+  title: 'Components/Buttons',
+  component: ButtonComponent,
+  argTypes: {
+    id: { control: 'text', description: 'Unique identifier for the button instance.' },
+    name: { control: 'text', description: 'Text label to be displayed on the button.' },
+    icon: { control: 'text', description: 'Icon type name from Ant Design Icons.' },
+    disabled: { control: 'boolean', description: 'If true, the button will be disabled and non-clickable.' },
+    type: { control: 'text', description: 'Defines the HTML button type, e.g., button, submit, reset.' },
+    isRound: { control: 'boolean', description: 'If true, makes the button circular.' },
+    customClass: { control: 'text', description: 'Additional CSS class for custom styling.' },
+    tooltipTitle: { control: 'text', description: 'Tooltip text displayed on hover.' },
+    btnClick: { action: 'clicked', description: 'Emits click event when the button is clicked.' },
+    btnClickId: { action: 'clicked with ID', description: 'Emits click event with ID when clicked.' },
+  },
+  args: { btnClick: action('btnClick'), btnClickId: action('btnClickId') },
+} as Meta<ButtonComponent>;
+
+const { BTN_HOME } = ButtonsControl;
+const { HOME_TOOLTIP } = MapButtonsTooltip;
+const { ICON_HOME, ICON_ZOOM_IN } = MapButtonsIcons;
+
+const generateRandomId = (): number => Math.floor(Math.random() * 1000);
+
+type ButtonStory = StoryObj<ButtonComponent>;
+
+const createClickHandler =
+  (actionFn: (id: number) => void, id: number) =>
+  (button: HTMLButtonElement): void => {
+    button.addEventListener('click', () => {
+      actionFn(id);
+    });
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  };
+
+export const DefaultButton: ButtonStory = {
+  args: {
+    name: BTN_HOME,
+    btnClick: action('MouseEvent for Default button'),
+    type: 'button',
+    customClass: 'default-button',
+  },
+  play: async ({ args, canvasElement }) => {
+    const button = canvasElement.querySelector('button');
+    if (button) {
+      button.addEventListener('click', (event: MouseEvent) => args.btnClick(event));
+      button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
+  },
+};
+
+export const RoundButtonWithIcon: ButtonStory = {
+  args: {
+    isRound: true,
+    icon: ICON_HOME,
+    tooltipTitle: HOME_TOOLTIP,
+    btnClickId: action('EventEmitter btnClickId for RoundButtonWithIcon: ID 1001'),
+  },
+  play: async ({ args, canvasElement }) => {
+    const button = canvasElement.querySelector('button');
+    const fixedId = 1001;
+    if (button) createClickHandler(args.btnClickId, fixedId)(button);
+  },
+};
+
+export const DynamicIconButton: ButtonStory = {
+  args: {
+    isRound: true,
+    icon: ICON_HOME,
+    tooltipTitle: HOME_TOOLTIP,
+    btnClickId: action('EventEmitter btnClickId for DynamicIconButton'),
+  },
+  play: async ({ args, canvasElement }) => {
+    const button = canvasElement.querySelector('button');
+    let currentIcon = ICON_HOME;
+    if (button) {
+      button.addEventListener('click', () => {
+        currentIcon = currentIcon === ICON_HOME ? ICON_ZOOM_IN : ICON_HOME;
+        button.querySelector('i')!.setAttribute('nzType', currentIcon);
+        args.btnClickId(currentIcon);
+      });
+      button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
+  },
+};
+
+export const SubmitButton: ButtonStory = {
+  args: {
+    name: 'Submit',
+    type: 'submit',
+    btnClick: action('Submit button clicked'),
+  },
+};
+
+export const DefaultButtonWithId: ButtonStory = {
+  args: {
+    name: BTN_HOME,
+    btnClickId: (id: number) => {
+      const randomId = generateRandomId();
+      action(`Default button clicked with ID: ${randomId}`)(id);
+    },
+  },
+  play: async ({ args, canvasElement }) => {
+    const button = canvasElement.querySelector('button');
+    if (button) createClickHandler(args.btnClickId, generateRandomId())(button);
+  },
+};
+
+export const StatefulButton: ButtonStory = {
+  args: {
+    name: 'Load Data',
+    btnClick: action('Stateful button clicked - start loading'),
+  },
+  play: async ({ args, canvasElement }) => {
+    const button = canvasElement.querySelector('button');
+    if (button) {
+      button.addEventListener('click', () => {
+        const originalText = button.textContent;
+        button.textContent = 'Loading...';
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+        args.btnClick(new MouseEvent('click'));
+      });
+      button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
+  },
+};
+
+export const RoundButtonWithTooltipHover: ButtonStory = {
+  args: {
+    isRound: true,
+    icon: ICON_HOME,
+    tooltipTitle: HOME_TOOLTIP,
+    btnClick: action('Round button with tooltip hover clicked'),
+  },
+  play: async ({ canvasElement }) => {
+    const button = canvasElement.querySelector('button');
+    button?.dispatchEvent(new MouseEvent('mouseover', { bubbles: true })); // Hover state test
+  },
+};
+
+export const RandomIdButton: ButtonStory = {
+  args: {
+    name: 'Random ID',
+    btnClickId: (id: number) => {
+      const randomId = generateRandomId();
+      action(`Button clicked with random ID: ${randomId}`)(id);
+    },
+  },
+  play: async ({ args, canvasElement }) => {
+    const button = canvasElement.querySelector('button');
+    if (button) createClickHandler(args.btnClickId, generateRandomId())(button);
+  },
+};
+

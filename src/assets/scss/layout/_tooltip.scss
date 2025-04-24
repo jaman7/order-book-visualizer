@@ -1,0 +1,68 @@
+@import "@angular/cdk/overlay-prebuilt.css";
+
+%tooltip-transparent {
+  .ant-tooltip-inner {
+    padding: 2px 6px;
+    border: 0;
+    outline: 0;
+    border-radius: 5px;
+    background-color: var(--color-light-grey);
+    box-shadow: none;
+    color: var(--color-blue);
+    text-align: center;
+    font-weight: 400;
+    font-size: 10px;
+    min-height: initial !important;
+    line-height: 1 !important;
+    font-family: var(--font-roboto);
+  }
+
+  .ant-tooltip-arrow {
+    display: none !important;
+
+    &::before {
+      content: none;
+    }
+  }
+}
+
+$max-z-index: 2147483647;
+
+.ant-tooltip {
+  z-index: $max-z-index !important;
+  max-width: 160px;
+  animation: scale-animation 0.1s alternate ease;
+  font-family: var(--font-roboto);
+
+  &.tooltip-btn,
+  &.tooltip-btn-top,
+  &.tooltip-btn-bottom {
+    @extend %tooltip-transparent;
+
+    .ant-tooltip-inner {
+      font-size: 13px;
+    }
+  }
+
+  &.tooltip-btn {
+    padding-top: 6px;
+  }
+
+  &.tooltip-btn-top {
+    padding-bottom: 6px;
+  }
+
+  &.tooltip-btn-bottom {
+    padding-bottom: 6px;
+  }
+}
+
+@keyframes scale-animation {
+  from {
+    transform: scale(0.5);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

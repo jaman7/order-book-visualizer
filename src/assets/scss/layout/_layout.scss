@@ -1,0 +1,31 @@
+html {
+  font-weight: 400;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-roboto);
+  font-feature-settings: normal;
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-font-smoothing: subpixel-antialiased !important;
+  color: var(--color-primary);
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+// .custom-tooltip {
+//   position: fixed;
+//   z-index: 1000;
+//   background: #333;
+//   color: #fff;
+//   padding: 5px 10px;
+//   border-radius: 4px;
+//   pointer-events: none;
+//   opacity: 0;
+//   transition: opacity 0.2s ease-in-out;
+// }

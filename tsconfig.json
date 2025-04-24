@@ -1,0 +1,56 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest"
+    ],
+    "baseUrl": "./src",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "skipLibCheck": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "noImplicitAny": true,
+    "useDefineForClassFields": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "paths": {
+      "@app/*": [
+        "app/*"
+      ],
+      "@env/*": [
+        "environments/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@scss/*": [
+        "assets/scss/*"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "fullTemplateTypeCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

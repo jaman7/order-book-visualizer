@@ -1,0 +1,36 @@
+{
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-standard-scss"
+  ],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreFunctions": [
+          "t",
+          "var"
+        ]
+      }
+    ],
+    "scss/dollar-variable-pattern": [
+      "[a-z][a-zA-Z]+",
+      {
+        "ignore": "local"
+      }
+    ],
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": [
+          "ng-deep"
+        ]
+      }
+    ],
+    "no-descending-specificity": null,
+    "selector-class-pattern": null,
+    "scss/no-global-function-names": null,
+    "color-no-invalid-hex": true
+  }
+}

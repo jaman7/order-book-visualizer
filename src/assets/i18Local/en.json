@@ -1,0 +1,10 @@
+{
+  "common": {
+    "buttons": {
+      "prev": "Previous",
+      "next": "Next",
+      "replay": "Replay",
+      "stop": "Stop"
+    }
+  }
+}

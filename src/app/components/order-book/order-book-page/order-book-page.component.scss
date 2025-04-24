@@ -1,0 +1,85 @@
+.layout {
+  display: grid;
+  grid-template-areas:
+    "controls progress"
+    "info    progress"
+    "slider  slider"
+    "metrics metrics"
+    "chart   chart";
+  grid-template-columns: 1fr auto;
+  grid-gap: 1rem;
+  padding: 1rem;
+
+  &__controls {
+    grid-area: controls;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  &__top-info {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__slider {
+    grid-area: slider;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    color: var(--color-primary);
+  }
+
+  &__metrics {
+    grid-area: metrics;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    color: var(--color-primary);
+  }
+
+  &__chart {
+    grid-area: chart;
+  }
+
+  .progress {
+    grid-area: progress;
+    width: 60px;
+    height: 60px;
+    position: relative;
+
+    &__circle {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+
+      circle {
+        fill: none;
+        stroke-width: 8;
+      }
+
+      &--background {
+        stroke: var(--color-light-grey);
+      }
+
+      &--foreground {
+        stroke: var(--color-blue);
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.1s linear;
+      }
+    }
+
+    &__countdown {
+      font-size: 1rem;
+      color: var(--color-orange);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
